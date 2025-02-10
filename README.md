@@ -1,9 +1,5 @@
 # 🌍 LibreTranslate Docker Image
 
-## 📖 Overview
-
-This Docker image is based on the official [`libretranslate/libretranslate`](https://hub.docker.com/r/libretranslate/libretranslate) image and includes a caching mechanism for language models. It allows you to run a self-hosted translation service with only the necessary language models, reducing resource consumption.
-
 ## ⭐ Features
 
 - **Custom Language Models**: Load only the required languages to save space.
@@ -11,20 +7,21 @@ This Docker image is based on the official [`libretranslate/libretranslate`](htt
 - **Lightweight & Optimized**: Based on LibreTranslate with pip caching.
 - **Fully Customizable**: Modify the `ARG languages` to specify supported languages.
 
-## 🛠 Cloning and Building Locally
+## 📌 Prerequisites
 
-### 🔄 Cloning the Repository
+- **Docker** installed on your system
+- **Git** for cloning the repository
 
-First, clone the repository to your local machine:
+## 🛠 Setup & Installation
+
+### **1️⃣ Clone the Repository**
 
 ```bash
 git clone https://github.com/painteau/libretranslate.git
 cd libretranslate
 ```
 
-### 🔨 Building the Custom Image
-
-To create your custom Docker image with preloaded language models, use:
+### **2️⃣ Build the Custom Image**
 
 ```bash
 docker build -t libretranslate-local \
@@ -32,40 +29,42 @@ docker build -t libretranslate-local \
     --build-arg languages="en,fr,ko" .
 ```
 
-This step compiles the image with only the specified language models, reducing unnecessary storage usage.
-
-### 🚀 Running the Custom Image
-
-Once the image is built, you can start a container with:
+### **3️⃣ Run the Custom Image**
 
 ```bash
-docker run -d --name libretranslate \
+docker run -d --rm --label com.centurylinklabs.watchtower.enable=true \
     -p 5000:5000 \
     libretranslate-local
 ```
 
-This will launch the translation service and expose it on port `5000`. Ensure that this port is accessible to your intended users.
+## 🔨 Running LibreTranslate Locally
 
-## 📦 Running from the Official Image
-
-If you prefer to use the official LibreTranslate image without modifications, you can run it directly with:
+### **1️⃣ Pull the Official Docker Image**
 
 ```bash
-docker run -d --name libretranslate \
+docker pull libretranslate/libretranslate:latest
+```
+
+### **2️⃣ Run the Container**
+
+```bash
+docker run -d --rm --label com.centurylinklabs.watchtower.enable=true \
     -p 5000:5000 \
     libretranslate/libretranslate:latest
 ```
 
-This will run the latest official LibreTranslate image with all default language models.
+## 🐳 Running with Docker (GHCR)
+
+LibreTranslate is available on **GitHub Container Registry (GHCR)**.
 
 ## ⚙ Configuration
 
-- **`filter`**: Set to `true` to limit the downloaded models to only the specified languages.
-- **`languages`**: A comma-separated list of language codes (e.g., `en,fr,ko`).
+| Option        | Description                                                |
+|--------------|------------------------------------------------------------|
+| `filter`      | Set to `true` to limit the downloaded models to only the specified languages. |
+| `languages`   | A comma-separated list of language codes (e.g., `en,fr,ko`). |
 
 ## 📡 API Usage
-
-Once the container is running, you can interact with LibreTranslate's API:
 
 ### 🔹 Translate Text
 
@@ -118,22 +117,29 @@ Response:
 ]
 ```
 
+## 🔧 Troubleshooting
+
+- **Ensure Docker is installed and running correctly.**
+- **Check container logs for errors using:**
+  ```bash
+  docker logs libretranslate
+  ```
+- **If API requests fail, verify that port 5000 is accessible.**
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
 ## ⚠ Security Notice
 
 Ensure that you expose the API securely and restrict access if necessary when deploying in a production environment.
 
-## 📜 License
+## 💡 Contributing
 
-This project is open-source and licensed under the MIT License.
+1️⃣ **Fork** the repository on [GitHub](https://github.com/painteau/libretranslate)  
+2️⃣ **Create a new branch** (`feature-branch`)  
+3️⃣ **Commit your changes**  
+4️⃣ **Push to your branch and create a pull request**  
 
-## 🤝 Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository on GitHub: [painteau/libretranslate](https://github.com/painteau/libretranslate).
-2. Create a new branch (`feature-branch`).
-3. Commit your changes.
-4. Push to your branch and create a pull request.
-
-For major changes, please open an issue first to discuss the proposed modifications.
+For major changes, please open an **issue** first to discuss the proposed modifications.
 
